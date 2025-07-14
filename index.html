@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dube Developers - Crafting Digital Excellence</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" href="images/logo.png" type="image/png">
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" xintegrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Three.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Custom Styles with CSS Variables for Theming -->
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f1f5f9;
+            --bg-tertiary: #ffffff;
+            --bg-inverted: #0a0a0a;
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-inverted: #e2e8f0;
+            --border-color: #e2e8f0;
+            --border-color-heavy: #cbd5e1;
+            --hero-gradient-start: #4f46e5;
+            --hero-gradient-mid: #ec4899;
+            --hero-gradient-end: #f59e0b;
+            --link-color: #4f46e5;
+            --tech-logo-filter: grayscale(100%) opacity(0.6);
+            --tech-logo-hover-filter: grayscale(0) opacity(1);
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #111827;
+            --bg-tertiary: #1f2937;
+            --bg-inverted: #ffffff;
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --text-inverted: #1e293b;
+            --border-color: #374151;
+            --border-color-heavy: #4b5563;
+            --hero-gradient-start: #6366f1;
+            --hero-gradient-mid: #f472b6;
+            --hero-gradient-end: #fbbf24;
+            --link-color: #818cf8;
+            --tech-logo-filter: grayscale(100%) opacity(0.7);
+            --tech-logo-hover-filter: grayscale(0) opacity(1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .hero-gradient-text {
+            background: linear-gradient(120deg, var(--hero-gradient-start), var(--hero-gradient-mid), var(--hero-gradient-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .bg-secondary {
+            background-color: var(--bg-secondary);
+        }
+
+        .bg-tertiary {
+            background-color: var(--bg-tertiary);
+        }
+
+        .border-custom {
+            border-color: var(--border-color);
+        }
+
+        .text-secondary {
+            color: var(--text-secondary);
+        }
+
+        .text-primary-custom {
+            color: var(--text-primary);
+        }
+
+        .link-color {
+            color: var(--link-color);
+        }
+
+        .link-color-hover:hover {
+            color: var(--hero-gradient-mid);
+        }
+
+        .card-glow {
+            transition: all 0.3s ease-in-out;
+        }
+
+            .card-glow:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 0 30px color-mix(in srgb, var(--hero-gradient-start) 40%, transparent);
+            }
+
+        .section {
+            padding: 6rem 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .section {
+                padding: 8rem 2rem;
+            }
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.3s;
+        }
+
+            .nav-link::after {
+                content: '';
+                position: absolute;
+                width: 0;
+                height: 2px;
+                bottom: -4px;
+                left: 50%;
+                transform: translateX(-50%);
+                background-color: var(--hero-gradient-mid);
+                transition: width 0.3s;
+            }
+
+            .nav-link:hover::after {
+                width: 100%;
+            }
+
+        .btn-primary {
+            background: linear-gradient(90deg, var(--hero-gradient-start), var(--hero-gradient-mid));
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+            .btn-primary:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px color-mix(in srgb, var(--hero-gradient-start) 50%, transparent);
+            }
+
+        .tech-logo {
+            transition: transform 0.3s, filter 0.3s;
+            filter: var(--tech-logo-filter);
+        }
+
+            .tech-logo:hover {
+                transform: scale(1.1);
+                filter: var(--tech-logo-hover-filter);
+            }
+
+        details {
+            background-color: var(--bg-tertiary);
+            border-color: var(--border-color);
+        }
+
+            details > summary {
+                list-style: none;
+            }
+
+                details > summary::-webkit-details-marker {
+                    display: none;
+                }
+
+            details .faq-arrow {
+                transition: transform 0.3s ease-out;
+            }
+
+            details[open] .faq-arrow {
+                transform: rotate(180deg);
+            }
+
+        .modal {
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-content {
+            transition: transform 0.3s ease;
+            background-color: var(--bg-secondary);
+            border-color: var(--border-color);
+        }
+
+        #hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Theme Toggle Button */
+        #theme-toggle .sun-icon, [data-theme="dark"] #theme-toggle .moon-icon {
+            display: block;
+        }
+
+        #theme-toggle .moon-icon, [data-theme="dark"] #theme-toggle .sun-icon {
+            display: none;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="#home" class="flex-shrink-0">
+                <img src="images/logo.png" onerror="this.onerror=null;this.style.display='none'; document.getElementById('text-logo').style.display='block';" alt="Dube Developers Logo" class="h-10 md:h-12">
+                <span id="text-logo" class="hidden text-2xl font-bold">D<span class="text-indigo-400">D</span></span>
+            </a>
+            <div class="hidden md:flex items-center space-x-6 lg:space-x-8 text-sm">
+                <a href="#services" class="nav-link text-secondary hover:text-primary-custom">Services</a>
+                <a href="#portfolio" class="nav-link text-secondary hover:text-primary-custom">Work</a>
+                <a href="#why-us" class="nav-link text-secondary hover:text-primary-custom">Why Us</a>
+                <a href="#insights" class="nav-link text-secondary hover:text-primary-custom">Insights</a>
+                <a href="#faq" class="nav-link text-secondary hover:text-primary-custom">FAQ</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <button id="theme-toggle" type="button" class="text-secondary hover:text-primary-custom focus:outline-none text-xl">
+                    <i class="fa-solid fa-sun sun-icon"></i>
+                    <i class="fa-solid fa-moon moon-icon"></i>
+                </button>
+                <a href="https://calendly.com/your-link" target="_blank" class="hidden md:block btn-primary text-white font-semibold px-5 py-2 rounded-lg">Book a Call</a>
+                <button id="mobile-menu-button" class="md:hidden text-primary-custom focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-secondary/90 backdrop-blur-sm">
+            <a href="#services" class="block py-3 px-6 text-secondary hover:bg-tertiary">Services</a>
+            <a href="#portfolio" class="block py-3 px-6 text-secondary hover:bg-tertiary">Work</a>
+            <a href="#why-us" class="block py-3 px-6 text-secondary hover:bg-tertiary">Why Us</a>
+            <a href="#insights" class="block py-3 px-6 text-secondary hover:bg-tertiary">Insights</a>
+            <a href="#faq" class="block py-3 px-6 text-secondary hover:bg-tertiary">FAQ</a>
+            <a href="#contact" class="block py-3 px-6 text-secondary hover:bg-tertiary">Contact</a>
+            <div class="p-4">
+                <a href="https://calendly.com/your-link" target="_blank" class="block text-center w-full btn-primary text-white font-semibold px-5 py-2 rounded-lg">Book a Call</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+            <canvas id="hero-canvas"></canvas>
+            <div class="hero-content container mx-auto px-6 text-center">
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight mb-4 animate-fade-in-down">
+                    Crafting <span class="hero-gradient-text">Digital Excellence</span>
+                </h1>
+                <p class="text-lg md:text-xl text-secondary max-w-3xl mx-auto mb-8 animate-fade-in-up">
+                    We build robust, scalable, and beautiful web and mobile applications that drive growth and define industries. Your vision, engineered with precision.
+                </p>
+                <div class="animate-fade-in-up animation-delay-300">
+                    <a href="https://calendly.com/your-link" target="_blank" class="btn-primary text-white font-bold py-3 px-8 rounded-full text-lg transform hover:scale-105 transition-transform">
+                        Book a Free Consultation
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trusted By Section -->
+        <section id="trusted-by" class="py-16 bg-secondary">
+            <div class="container mx-auto px-6">
+                <h3 class="text-center text-secondary font-semibold uppercase tracking-wider mb-8">Trusted by innovative companies</h3>
+                <div class="flex flex-wrap justify-center items-center gap-x-10 gap-y-8">
+                    <img src="https://placehold.co/140x50/0a0a0a/e2e8f0?text=MECS" alt="MECS Logo" class="tech-logo h-8">
+                    <img src="https://placehold.co/140x50/0a0a0a/e2e8f0?text=Emelda+Business+Solution" alt="EmeldaBusinessSolution Logo" class="tech-logo h-8">
+                    <img src="https://placehold.co/140x50/0a0a0a/e2e8f0?text=KhayaTec" alt="KhayaTec Logo" class="tech-logo h-8">
+                    <img src="https://placehold.co/140x50/0a0a0a/e2e8f0?text=The+PercentageCo" alt="The PercentageCo. Logo" class="tech-logo h-8">
+                    <img src="https://placehold.co/140x50/0a0a0a/e2e8f0?text=Dube+Stem+Mastery" alt="Dube Stem Mastery Logo" class="tech-logo h-8">
+                    <img src="https://placehold.co/140x50/0a0a0a/e2e8f0?text=Umpteen+geeks" alt="Umpteen geeks Logo" class="tech-logo h-8">
+                    <img src="https://placehold.co/140x50/0a0a0a/e2e8f0?text=Umpteen+Selectives" alt="Umpteen Selectives Logo" class="tech-logo h-8">
+                    <img src="https://placehold.co/140x50/0a0a0a/e2e8f0?text=BePeezy" alt="BePeezy Logo" class="tech-logo h-8">
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="section">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16"> <h2 class="text-3xl md:text-4xl font-bold">Our Expertise</h2> <p class="text-secondary mt-2">Full-stack solutions to bring your ideas to life.</p> </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="card-glow bg-tertiary p-8 rounded-2xl border border-custom"> <h3 class="text-2xl font-bold mb-3">Web Development</h3> <p class="text-secondary">Blazing-fast websites and complex web platforms using modern frameworks.</p> </div>
+                    <div class="card-glow bg-tertiary p-8 rounded-2xl border border-custom"> <h3 class="text-2xl font-bold mb-3">Mobile Apps</h3> <p class="text-secondary">Intuitive, high-performance native and cross-platform mobile apps.</p> </div>
+                    <div class="card-glow bg-tertiary p-8 rounded-2xl border border-custom"> <h3 class="text-2xl font-bold mb-3">Backend & API</h3> <p class="text-secondary">Secure, scalable, and efficient backend systems and APIs.</p> </div>
+                    <div class="card-glow bg-tertiary p-8 rounded-2xl border border-custom"> <h3 class="text-2xl font-bold mb-3">UI/UX Design</h3> <p class="text-secondary">User-centric design that balances beauty and functionality.</p> </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Impact Section -->
+        <section id="impact" class="section bg-secondary">
+            <div class="container mx-auto px-6">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                    <div> <h3 class="text-4xl md:text-5xl font-bold hero-gradient-text"><span class="stat-counter" data-target="25">0</span>+</h3> <p class="text-secondary mt-2">Projects Delivered</p> </div>
+                    <div> <h3 class="text-4xl md:text-5xl font-bold hero-gradient-text"><span class="stat-counter" data-target="8">0</span></h3> <p class="text-secondary mt-2">Happy Partners</p> </div>
+                    <div> <h3 class="text-4xl md:text-5xl font-bold hero-gradient-text"><span class="stat-counter" data-target="500">0</span>k+</h3> <p class="text-secondary mt-2">Lines of Code</p> </div>
+                    <div> <h3 class="text-4xl md:text-5xl font-bold hero-gradient-text"><span class="stat-counter" data-target="100">0</span>%</h3> <p class="text-secondary mt-2">Client Satisfaction</p> </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <section id="portfolio" class="section">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16"> <h2 class="text-3xl md:text-4xl font-bold">Our Showcase</h2> <p class="text-secondary mt-2">A diverse portfolio of impactful solutions.</p> </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-tertiary rounded-lg overflow-hidden group card-glow border border-custom flex flex-col"> <img src="https://placehold.co/600x400/c2410c/ffffff?text=GBV+Panic+App" alt="GBV Panic Button App" class="w-full h-60 object-cover"> <div class="p-6 flex-grow"> <h3 class="text-xl font-bold">GBV Panic Button</h3> <p class="text-secondary mt-2">A discreet, life-saving mobile app to combat gender-based violence.</p> </div> <div class="p-4 bg-secondary mt-auto"> <button class="case-study-btn w-full link-color font-semibold link-color-hover" data-project="gbv">View Case Study &rarr;</button> </div> </div>
+                    <div class="bg-tertiary rounded-lg overflow-hidden group card-glow border border-custom flex flex-col"> <img src="https://placehold.co/600x400/db2777/ffffff?text=Groove+Point" alt="Groove Point App" class="w-full h-60 object-cover"> <div class="p-6 flex-grow"> <h3 class="text-xl font-bold">Groove Point</h3> <p class="text-secondary mt-2">Discover the vibe of local venues in real-time with this social discovery app.</p> </div> <div class="p-4 bg-secondary mt-auto"> <button class="case-study-btn w-full link-color font-semibold link-color-hover" data-project="groove">View Case Study &rarr;</button> </div> </div>
+                    <div class="bg-tertiary rounded-lg overflow-hidden group card-glow border border-custom flex flex-col"> <img src="https://placehold.co/600x400/0d9488/ffffff?text=Clinic+System" alt="Clinic Management System" class="w-full h-60 object-cover"> <div class="p-6 flex-grow"> <h3 class="text-xl font-bold">Clinic Management System</h3> <p class="text-secondary mt-2">A comprehensive web platform for healthcare facilities.</p> </div> <div class="p-4 bg-secondary mt-auto"> <button class="case-study-btn w-full link-color font-semibold link-color-hover" data-project="clinic">View Case Study &rarr;</button> </div> </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why Choose Us Section -->
+        <section id="why-us" class="section bg-secondary">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16"> <h2 class="text-3xl md:text-4xl font-bold">Why Partner With Dube Developers?</h2> <p class="text-secondary mt-2">We're more than just coders. We're your dedicated technology partners.</p> </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
+                    <div class="flex items-start space-x-4"> <div class="bg-tertiary w-16 h-16 rounded-lg flex-shrink-0 flex items-center justify-center border-2 border-custom"> <i class="fa-solid fa-users-gear text-3xl" style="color:var(--hero-gradient-start)"></i> </div> <div> <h3 class="text-xl font-bold">Agile Methodology</h3> <p class="text-secondary mt-1">We adapt to your needs with iterative development, ensuring flexibility and delivering value faster.</p> </div> </div>
+                    <div class="flex items-start space-x-4"> <div class="bg-tertiary w-16 h-16 rounded-lg flex-shrink-0 flex items-center justify-center border-2 border-custom"> <i class="fa-solid fa-comments text-3xl" style="color:var(--hero-gradient-mid)"></i> </div> <div> <h3 class="text-xl font-bold">Transparent Communication</h3> <p class="text-secondary mt-1">You're always in the loop. We believe in clear, constant communication and a collaborative partnership.</p> </div> </div>
+                    <div class="flex items-start space-x-4"> <div class="bg-tertiary w-16 h-16 rounded-lg flex-shrink-0 flex items-center justify-center border-2 border-custom"> <i class="fa-solid fa-medal text-3xl" style="color:var(--hero-gradient-end)"></i> </div> <div> <h3 class="text-xl font-bold">Commitment to Quality</h3> <p class="text-secondary mt-1">From elegant code to pixel-perfect design, we are obsessed with delivering high-quality, robust solutions.</p> </div> </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Insights/Blog Section -->
+        <section id="insights" class="section">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold">Our Insights & Expertise</h2>
+                    <p class="text-secondary mt-2">Sharing our knowledge to help you grow.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-tertiary rounded-lg overflow-hidden group card-glow border border-custom flex flex-col"> <img src="https://placehold.co/600x400/4338ca/ffffff?text=Mobile+Strategy" alt="Mobile App" class="w-full h-60 object-cover"> <div class="p-6 flex-grow"> <p class="text-sm font-semibold mb-2" style="color:var(--hero-gradient-start)">Business Strategy</p> <h3 class="text-xl font-bold">Why Your Business Needs a Mobile App in 2025</h3> <p class="text-secondary mt-2">Explore the shifting digital landscape and why a dedicated mobile presence is no longer a luxury, but a necessity for growth.</p> </div> <div class="p-4 bg-secondary mt-auto"> <a href="#" class="w-full link-color font-semibold link-color-hover">Read More &rarr;</a> </div> </div>
+                    <div class="bg-tertiary rounded-lg overflow-hidden group card-glow border border-custom flex flex-col"> <img src="https://placehold.co/600x400/be185d/ffffff?text=Tech+Choices" alt="Code" class="w-full h-60 object-cover"> <div class="p-6 flex-grow"> <p class="text-sm font-semibold mb-2" style="color:var(--hero-gradient-mid)">Tech Insights</p> <h3 class="text-xl font-bold">Choosing the Right Tech Stack for Your Startup</h3> <p class="text-secondary mt-2">A guide to navigating the critical decisions of technology selection, balancing scalability, cost, and speed to market.</p> </div> <div class="p-4 bg-secondary mt-auto"> <a href="#" class="w-full link-color font-semibold link-color-hover">Read More &rarr;</a> </div> </div>
+                    <div class="bg-tertiary rounded-lg overflow-hidden group card-glow border border-custom flex flex-col"> <img src="https://placehold.co/600x400/b45309/ffffff?text=User+Experience" alt="Design" class="w-full h-60 object-cover"> <div class="p-6 flex-grow"> <p class="text-sm font-semibold mb-2" style="color:var(--hero-gradient-end)">UI/UX Design</p> <h3 class="text-xl font-bold">The ROI of Great User Experience (UX) Design</h3> <p class="text-secondary mt-2">Learn how investing in intuitive and engaging design directly impacts user retention, conversion rates, and your bottom line.</p> </div> <div class="p-4 bg-secondary mt-auto"> <a href="#" class="w-full link-color font-semibold link-color-hover">Read More &rarr;</a> </div> </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section id="testimonials" class="section bg-secondary">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16"> <h2 class="text-3xl md:text-4xl font-bold">What Our Partners Say</h2> <p class="text-secondary mt-2">Real results, real partnerships.</p> </div>
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <div class="bg-tertiary p-8 rounded-2xl border border-custom"> <p class="text-secondary italic">"Dube Developers transformed our business processes with a level of professionalism and technical skill that is second to none. Their communication and commitment were flawless."</p> <div class="flex items-center mt-6"> <img class="w-12 h-12 rounded-full" src="https://placehold.co/100x100/4f46e5/ffffff?text=A" alt="Avatar"> <div class="ml-4"> <p class="font-bold">Ayanda Mahlangu</p> <p class="text-sm link-color">CEO, Emelda Business Solution</p> </div> </div> </div>
+                    <div class="bg-tertiary p-8 rounded-2xl border border-custom"> <p class="text-secondary italic">"The custom web application they built for us is incredibly robust and scalable. We've seen a 40% improvement in efficiency since launch. Highly recommended for any tech-forward company."</p> <div class="flex items-center mt-6"> <img class="w-12 h-12 rounded-full" src="https://placehold.co/100x100/ec4899/ffffff?text=M" alt="Avatar"> <div class="ml-4"> <p class="font-bold">Mpumezo Sidiya</p> <p class="text-sm" style="color:var(--hero-gradient-mid)">Operations Executive, KhayaTec</p> </div> </div> </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Us / Team Section (UPDATED) -->
+        <section id="about" class="section">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-bold">The Architects of Your Success</h2>
+                    <p class="text-secondary mt-2">Meet the minds behind Dube Developers.</p>
+                </div>
+                <div class="flex flex-wrap justify-center gap-12 lg:gap-16">
+                    <div class="text-center w-full sm:w-1/2 md:w-1/3"> <img src="images/mihle.png" onerror="this.onerror=null;this.src='https://placehold.co/400x400/1e293b/e2e8f0?text=Mihle';" alt="Mihle Siguqu" class="w-48 h-48 mx-auto rounded-full border-4 shadow-lg mb-4 transform transition-transform duration-300 hover:scale-105" style="border-color:var(--hero-gradient-start)"> <h3 class="text-2xl font-bold">Mihle Siguqu</h3> <p class="font-semibold" style="color:var(--hero-gradient-start)">CEO & Front-End Specialist</p> <p class="text-secondary mt-2">As our front-end expert, Mihle translates strategic vision into beautiful, intuitive user experiences that captivate and convert.</p> </div>
+                    <div class="text-center w-full sm:w-1/2 md:w-1/3"> <img src="images/busani.png" onerror="this.onerror=null;this.src='https://placehold.co/400x400/1e293b/e2e8f0?text=Busani';" alt="Busani Dube" class="w-48 h-48 mx-auto rounded-full border-4 shadow-lg mb-4 transform transition-transform duration-300 hover:scale-105" style="border-color:var(--hero-gradient-mid)"> <h3 class="text-xl font-bold">Busani Dube</h3> <p class="font-semibold" style="color:var(--hero-gradient-mid)">Full-Stack Lead Engineer</p> <p class="text-secondary mt-2">Our full-stack powerhouse, Busani architects and engineers both the robust backend logic and the dynamic front-end interfaces across all languages.</p> </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="section bg-secondary">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <div class="text-center mb-16"> <h2 class="text-3xl md:text-4xl font-bold">Frequently Asked Questions</h2> <p class="text-secondary mt-2">Have questions? We have answers.</p> </div>
+                <div class="space-y-4">
+                    <details> <summary class="font-semibold text-lg cursor-pointer flex justify-between items-center p-6"> What is your development process? <i class="fa-solid fa-chevron-down faq-arrow"></i> </summary> <p class="text-secondary p-6 pt-0">We follow an agile development process that allows for flexibility and client feedback. It starts with Discovery & Planning, moves to Design & Prototyping, then Development & Engineering, and finally Testing, Deployment & Support. We keep you involved at every stage.</p> </details>
+                    <details> <summary class="font-semibold text-lg cursor-pointer flex justify-between items-center p-6"> How much will my project cost? <i class="fa-solid fa-chevron-down faq-arrow"></i> </summary> <p class="text-secondary p-6 pt-0">Project costs vary depending on the scope, complexity, and features required. We offer flexible pricing models, including fixed-price and time-and-materials. Contact us for a free, detailed quote tailored to your specific needs.</p> </details>
+                    <details> <summary class="font-semibold text-lg cursor-pointer flex justify-between items-center p-6"> How long will it take to build my app? <i class="fa-solid fa-chevron-down faq-arrow"></i> </summary> <p class="text-secondary p-6 pt-0">A typical project can take anywhere from 3 to 9 months. The timeline depends heavily on the project's complexity. A simple app can be built faster, while a complex enterprise platform will require more time. We provide a detailed project timeline after the initial discovery phase.</p> </details>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Banner -->
+        <section id="cta-banner" class="py-20 bg-gradient-to-r from-indigo-700 via-purple-700 to-pink-700">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-3xl font-extrabold text-white mb-4">Have an ambitious idea?</h2>
+                <p class="text-indigo-200 text-lg max-w-2xl mx-auto mb-8">Let's turn your idea into a digital reality. Schedule a free, no-obligation consultation with our experts today.</p>
+                <a href="https://calendly.com/your-link" target="_blank" class="bg-white text-indigo-700 font-bold py-3 px-8 rounded-full text-lg transform hover:scale-105 transition-transform shadow-2xl">
+                    Book Your Free Call
+                </a>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16"> <h2 class="text-3xl md:text-4xl font-bold">Get In Touch</h2> <p class="text-secondary mt-2 max-w-2xl mx-auto">We're ready to listen. Reach out via email, phone, or the contact form below.</p> </div>
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div class="space-y-6"> <div class="flex items-center space-x-4"> <div class="bg-tertiary w-16 h-16 rounded-full flex items-center justify-center border-2 border-custom"> <i class="fa-solid fa-envelope text-2xl link-color"></i> </div> <div> <h3 class="text-xl font-semibold">Email Us</h3> <a href="mailto:busanicraig@gmail.com" class="text-secondary link-color-hover transition">busanicraig@gmail.com</a> </div> </div> <div class="flex items-center space-x-4"> <div class="bg-tertiary w-16 h-16 rounded-full flex items-center justify-center border-2 border-custom"> <i class="fa-solid fa-phone text-2xl" style="color:var(--hero-gradient-mid)"></i> </div> <div> <h3 class="text-xl font-semibold">Call Us</h3> <a href="tel:0658710894" class="text-secondary link-color-hover transition">065 871 0894</a> </div> </div> </div>
+                    <div class="bg-tertiary p-8 rounded-2xl border border-custom">
+                        <form action="https://formspree.io/f/movwyjlr" method="POST" class="space-y-6">
+                            <div> <label for="name" class="block text-sm font-medium text-secondary">Name</label> <input type="text" id="name" name="name" required class="mt-1 block w-full bg-secondary border-border-custom rounded-md shadow-sm py-3 px-4 focus:outline-none focus:ring-2 focus:ring-[color:var(--hero-gradient-start)]"> </div>
+                            <div> <label for="email" class="block text-sm font-medium text-secondary">Email</label> <input type="email" id="email" name="email" required class="mt-1 block w-full bg-secondary border-border-custom rounded-md shadow-sm py-3 px-4 focus:outline-none focus:ring-2 focus:ring-[color:var(--hero-gradient-start)]"> </div>
+                            <div> <label for="message" class="block text-sm font-medium text-secondary">Message</label> <textarea id="message" name="message" rows="4" required class="mt-1 block w-full bg-secondary border-border-custom rounded-md shadow-sm py-3 px-4 focus:outline-none focus:ring-2 focus:ring-[color:var(--hero-gradient-start)]"></textarea> </div>
+                            <div class="text-center"> <button type="submit" class="btn-primary text-white font-bold py-3 px-8 rounded-full text-lg w-full"> Send Message </button> </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-secondary border-t border-custom">
+        <div class="container mx-auto px-6 py-8 text-center text-secondary">
+            <div class="flex justify-center space-x-6 mb-4"> <a href="mailto:busanicraig@gmail.com" class="link-color-hover transition">busanicraig@gmail.com</a> <span>&bull;</span> <a href="tel:0658710894" class="link-color-hover transition">065 871 0894</a> </div>
+            <p>&copy; <span id="year"></span> Dube Developers. All Rights Reserved.</p>
+            <p class="text-sm mt-1">Built with passion and precision.</p>
+        </div>
+    </footer>
+
+    <!-- Case Study Modal -->
+    <div id="modal" class="modal fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-70 backdrop-blur-sm hidden opacity-0">
+        <div id="modal-content" class="modal-content rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto transform scale-95"></div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- Theme Toggler ---
+            const themeToggle = document.getElementById('theme-toggle');
+            const htmlEl = document.documentElement;
+            const currentTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            htmlEl.setAttribute('data-theme', currentTheme);
+
+            themeToggle.addEventListener('click', () => {
+                const newTheme = htmlEl.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+                htmlEl.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+            });
+
+            // --- Interactive Hero Background ---
+            const heroSection = document.getElementById('home');
+            const canvas = document.getElementById('hero-canvas');
+            if (window.THREE && heroSection && canvas) {
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, heroSection.offsetWidth / heroSection.offsetHeight, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+                renderer.setSize(heroSection.offsetWidth, heroSection.offsetHeight);
+
+                const particlesCount = 5000;
+                const positions = new Float32Array(particlesCount * 3);
+                for (let i = 0; i < particlesCount * 3; i++) { positions[i] = (Math.random() - 0.5) * 10; }
+                const particlesGeometry = new THREE.BufferGeometry();
+                particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+                const particlesMaterial = new THREE.PointsMaterial({ size: 0.015, transparent: true, blending: THREE.AdditiveBlending });
+                const particles = new THREE.Points(particlesGeometry, particlesMaterial);
+                scene.add(particles);
+                camera.position.z = 5;
+
+                const mouse = new THREE.Vector2();
+                window.addEventListener('mousemove', (event) => { mouse.x = (event.clientX / window.innerWidth) * 2 - 1; mouse.y = -(event.clientY / window.innerHeight) * 2 + 1; });
+
+                window.addEventListener('resize', () => {
+                    camera.aspect = heroSection.offsetWidth / heroSection.offsetHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(heroSection.offsetWidth, heroSection.offsetHeight);
+                });
+
+                const clock = new THREE.Clock();
+                const animate = function () {
+                    const elapsedTime = clock.getElapsedTime();
+                    particles.rotation.y = elapsedTime * 0.05;
+                    particles.rotation.x = elapsedTime * 0.02;
+                    camera.position.x += (mouse.x * 0.5 - camera.position.x) * 0.02;
+                    camera.position.y += (mouse.y * 0.5 - camera.position.y) * 0.02;
+                    const currentThemeColor = getComputedStyle(document.documentElement).getPropertyValue('--hero-gradient-start').trim();
+                    particlesMaterial.color.set(currentThemeColor);
+
+                    requestAnimationFrame(animate);
+                    renderer.render(scene, camera);
+                };
+                animate();
+            }
+
+            // --- Case Study Modal Data and Logic ---
+            const projectData = {
+                gbv: { title: "GBV Panic Button", image: "https://placehold.co/800x500/c2410c/ffffff?text=GBV+App+Showcase", challenge: "Create a discreet, easy-to-use mobile application that allows individuals in distress to quickly and silently alert their trusted contacts and emergency services, addressing the critical need for immediate response in gender-based violence situations.", solution: "We developed a cross-platform mobile app using React Native for wide accessibility. The core feature is a single-press panic button that sends a pre-defined SMS with the user's live GPS location to a list of trusted contacts. The UI was designed to be simple and non-intrusive.", features: ["One-touch silent alert activation", "Real-time GPS location sharing", "Secure management of trusted contacts", "Low battery and network usage", "Discreet app icon and name for user safety"], tags: ["React Native", "Node.js", "MongoDB", "Twilio API"] },
+                groove: { title: "Groove Point", image: "https://placehold.co/800x500/db2777/ffffff?text=Groove+Point+Showcase", challenge: "Regulars and tourists alike struggle to find the right social venue for their mood. Information is scattered, and there's no reliable way to gauge the 'vibe' of a place without physically going there.", solution: "Groove Point is a social discovery app built with Flutter that aggregates data from various sources and user check-ins to provide a real-time 'vibe score' for restaurants, clubs, and bars. It uses the Google Maps API for location data and Firebase for real-time database and authentication.", features: ["Real-time 'vibe score' for venues", "Interactive map with venue filtering", "User check-ins and reviews", "Event listings and special offers", "Personalized recommendations"], tags: ["Flutter", "Firebase", "Google Maps API", "UI/UX Design"] },
+                clinic: { title: "Clinic Management System", image: "https://placehold.co/800x500/0d9488/ffffff?text=Clinic+System+Showcase", challenge: "Small to medium-sized clinics often rely on paper-based systems or disjointed software, leading to inefficiencies in patient management, appointment scheduling, and billing.", solution: "We engineered a secure, HIPAA-compliant web-based platform using Vue.js and a robust Python (Django) backend. The system centralizes all clinic operations, from patient intake and electronic health records (EHR) to automated appointment reminders and integrated billing.", features: ["Secure patient record management (EHR)", "Drag-and-drop appointment scheduling", "Automated billing and invoicing", "Role-based access control for staff", "Reporting and analytics dashboard"], tags: ["Vue.js", "Python (Django)", "PostgreSQL", "AWS"] }
+            };
+            const modal = document.getElementById('modal');
+            const modalContent = document.getElementById('modal-content');
+            function openModal(projectKey) {
+                const data = projectData[projectKey];
+                if (!data) return;
+                let featuresHtml = data.features.map(f => `<li class="flex items-start"><span class="link-color mr-3 mt-1">&#10003;</span><span>${f}</span></li>`).join('');
+                let tagsHtml = data.tags.map(t => `<span class="bg-tertiary border border-custom text-secondary text-xs font-semibold px-2.5 py-1 rounded-full">${t}</span>`).join('');
+                modalContent.innerHTML = `<div class="p-6 md:p-8"><div class="flex justify-between items-start mb-4"><h2 class="text-3xl font-bold text-primary-custom">${data.title}</h2><button id="close-modal-btn" class="text-secondary hover:text-primary-custom text-3xl">&times;</button></div><div class="flex flex-wrap gap-2 mb-6">${tagsHtml}</div><img src="${data.image}" alt="${data.title}" class="w-full rounded-lg mb-6"><div class="grid md:grid-cols-2 gap-8 text-secondary"><div><h3 class="text-xl font-bold text-primary-custom mb-3 border-b-2 pb-2" style="border-color:var(--hero-gradient-start)">The Challenge</h3><p>${data.challenge}</p></div><div><h3 class="text-xl font-bold text-primary-custom mb-3 border-b-2 pb-2" style="border-color:var(--hero-gradient-mid)">Our Solution</h3><p>${data.solution}</p></div></div><div class="mt-8"><h3 class="text-xl font-bold text-primary-custom mb-4 border-b-2 pb-2" style="border-color:var(--hero-gradient-end)">Key Features</h3><ul class="space-y-2">${featuresHtml}</ul></div></div>`;
+                modal.classList.remove('hidden');
+                setTimeout(() => { modal.classList.remove('opacity-0'); modalContent.classList.remove('scale-95'); document.body.style.overflow = 'hidden'; }, 10);
+                document.getElementById('close-modal-btn').addEventListener('click', closeModal);
+            }
+            function closeModal() {
+                modal.classList.add('opacity-0'); modalContent.classList.add('scale-95');
+                setTimeout(() => { modal.classList.add('hidden'); document.body.style.overflow = 'auto'; }, 300);
+            }
+            document.querySelectorAll('.case-study-btn').forEach(btn => btn.addEventListener('click', () => openModal(btn.dataset.project)));
+            modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+            document.addEventListener('keydown', e => { if (e.key === "Escape" && !modal.classList.contains('hidden')) closeModal(); });
+
+            // --- Impact Stat Counter ---
+            const statsSection = document.getElementById('impact');
+            const counters = document.querySelectorAll('.stat-counter');
+            let hasAnimated = false;
+            const startCounter = () => {
+                if (hasAnimated) return;
+                counters.forEach(counter => {
+                    const target = +counter.getAttribute('data-target'); let current = 0; const increment = target / 100;
+                    const updateCounter = () => { current += increment; if (current < target) { counter.innerText = Math.ceil(current); requestAnimationFrame(updateCounter); } else { counter.innerText = target; } };
+                    updateCounter();
+                });
+                hasAnimated = true;
+            };
+            const statsObserver = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) startCounter(); }); }, { threshold: 0.5 });
+            if (statsSection) statsObserver.observe(statsSection);
+
+            // --- General Page Scripts ---
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', () => { window.scrollY > 50 ? header.classList.add('bg-secondary/80', 'backdrop-blur-sm', 'shadow-lg') : header.classList.remove('bg-secondary/80', 'backdrop-blur-sm', 'shadow-lg'); });
+            const mobileMenu = document.getElementById('mobile-menu');
+            document.querySelectorAll('#mobile-menu a').forEach(link => link.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+            document.getElementById('mobile-menu-button').addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+
+            // --- FIX: Smooth Scrolling for Anchor Links ---
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const targetId = this.getAttribute('href');
+                    // Only prevent default and scroll if the href is a valid ID selector
+                    if (targetId && targetId.length > 1) {
+                        e.preventDefault();
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            const headerOffset = header.offsetHeight;
+                            const elementPosition = targetElement.getBoundingClientRect().top;
+                            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                            window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+                        }
+                    }
+                });
+            });
+            document.getElementById('year').textContent = new Date().getFullYear();
+
+            // --- Scroll Animations ---
+            const animationObserver = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('animate-fade-in-up'); animationObserver.unobserve(entry.target); } }); }, { threshold: 0.1 });
+            document.querySelectorAll('.section, .card-glow, .group, .feature, details').forEach(el => { el.classList.add('opacity-0'); animationObserver.observe(el); });
+            document.querySelector('.animate-fade-in-down')?.classList.remove('opacity-0');
+            document.querySelectorAll('.animate-fade-in-up').forEach(el => el.classList.remove('opacity-0'));
+            document.querySelector('#trusted-by')?.classList.remove('opacity-0');
+            if (statsSection) document.querySelector('#impact').classList.remove('opacity-0');
+        });
+
+        const style = document.createElement('style');
+        style.innerHTML = `.opacity-0 { opacity: 0; } .animate-fade-in-down { animation: fadeInDown 0.8s ease-out forwards; } .animate-fade-in-up { animation: fadeInUp 0.8s ease-out forwards; } .animation-delay-300 { animation-delay: 0.3s; } @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } } @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }`;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
